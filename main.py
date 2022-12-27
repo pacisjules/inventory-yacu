@@ -79,6 +79,7 @@ from companySetting import controller as companySettingsController
 from stores import controller as storesController
 
 from section import controller as sectionController
+from group import controller as groupController
 
 
 
@@ -95,7 +96,7 @@ app.include_router(storesController.router, tags=["Stores"])
 
 
 app.include_router(sectionController.router, tags=["Sections"])
-
+app.include_router(groupController.router, tags=["Groups"])
 
 
 

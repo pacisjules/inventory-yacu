@@ -30,7 +30,7 @@ async def main_Image():
 @app.get("/", tags=["Root"])
 async def root():
     return{
-        "message": "This Apis are for  Inventory&Sales Management System",
+        "message": "This Apis are for  Inventory & Sales Management System",
         "Software Engineer": "ISHIMWE JULES Pacis, NTWARI Esdras",
         "Email": "ishimwejulespacis@gmail.com and ntwariezraa@gmail.com",
         "GitHub": "https://github.com/pacisjules and https://github.com/ezran2022",
@@ -74,8 +74,11 @@ from auth import controller as authController
 from users import controller as userController
 from customer import controller as customerController
 from currency import controller as currencyController
+
 from companySetting import controller as companySettingsController
 from stores import controller as storesController
+
+from section import controller as sectionController
 
 
 
@@ -86,8 +89,12 @@ app.include_router(userController.router, tags=["Users"])
 #Application Parts
 app.include_router(customerController.router, tags=["Customers"])
 app.include_router(currencyController.router, tags=["Currency"])
+
 app.include_router(companySettingsController.router, tags=["Company Setting"])
 app.include_router(storesController.router, tags=["Stores"])
+
+
+app.include_router(sectionController.router, tags=["Sections"])
 
 
 

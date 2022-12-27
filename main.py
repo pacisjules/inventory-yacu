@@ -74,6 +74,8 @@ from auth import controller as authController
 from users import controller as userController
 from customer import controller as customerController
 from currency import controller as currencyController
+from companySetting import controller as companySettingsController
+from stores import controller as storesController
 
 
 
@@ -84,6 +86,8 @@ app.include_router(userController.router, tags=["Users"])
 #Application Parts
 app.include_router(customerController.router, tags=["Customers"])
 app.include_router(currencyController.router, tags=["Currency"])
+app.include_router(companySettingsController.router, tags=["Company Setting"])
+app.include_router(storesController.router, tags=["Stores"])
 
 
 

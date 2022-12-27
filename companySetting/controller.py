@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from db.table import currency
+from db.table import companySetting
 from utils import util
-from currency import model
+from companySetting import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse
@@ -12,69 +12,101 @@ from fastapi_pagination import Page, paginate
 router = APIRouter()
 
 
-# All Currency
-@router.get("/all_currency", response_model=Page[model.CurrencyList])
-async def find_all_currency(currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = currency.select().order_by(currency.c.currency_id.desc())
+# All companySetting
+@router.get("/all_companySetting", response_model=Page[model.companySettingList])
+async def find_all_companySettings(currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.select().order_by(companySetting.c.org_setting_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
 
-# Find currencys with country
-@router.get("/like_currency/{country}", response_model=Page[model.CurrencyList])
-async def find_like_currency(country: str, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
 
-    query = "select * from currency where currency_country like '%{}%'".format(country)
+
+# Find companySettings with names
+@router.get("/like_companySetting/{names}", response_model=Page[model.companySettingList])
+async def find_like_companySetting(names: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+
+    query = "select * from companySetting where organization_name like '%{}%'".format(names)
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
 
-
-
-#counting all currencys
-@router.get("/count_currencys")
-async def count_all_count(currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(currency_id) as NumberOfCountry FROM currency"
+#counting all companySettings
+@router.get("/count_companySettings")
+async def count_all_companies(currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = "SELECT COUNT(org_setting_id) as NumberOfCompanies FROM companySetting"
     res= await database.fetch_all(query=query, values={})
     return res
  
 
-#Find one currency by ID
-@router.get("/currency/{currency_id}", response_model=model.CurrencyList)
-async def find_currency_by_id(currency_id: str, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = currency.select().where(currency.c.currency_id == currency_id)
+#Find one companySetting by ID
+@router.get("/companySetting/{org_setting_id}", response_model=model.companySettingList)
+async def find_companySetting_by_id(org_setting_id: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.select().where(companySetting.c.org_setting_id == org_setting_id)
     return await database.fetch_one(query)
 
 
-#Find one currency by currency code
-@router.get("/currency_code/{currency_code}", response_model=model.CurrencyList)
-async def find_currency_by_code(currency_code: str, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = currency.select().where(currency.c.currency_code == currency_code)
+
+
+
+#Find one companySetting by tel 1
+@router.get("/companySetting_tel/{organization_tel}", response_model=model.companySettingList)
+async def find_companySetting_by_telephone(organization_tel: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.select().where(companySetting.c.organization_tel == organization_tel)
     return await database.fetch_one(query)
 
 
-# Find currencys by status
-@router.get("/currency_by_status/{status}", response_model=Page[model.CurrencyList])
-async def find_currency_by_status(status: str, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = currency.select().where(currency.c.status == status)
+#Find one companySetting by tel 2
+@router.get("/companySetting_tel1/{organization_tel2}", response_model=model.companySettingList)
+async def find_companySetting_by_telephone(organization_tel2: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.select().where(companySetting.c.organization_tel2 == organization_tel2)
+    return await database.fetch_one(query)
+
+
+# Find companySettings by status
+@router.get("/companySetting_by_status/{status}", response_model=Page[model.companySettingList])
+async def find_companySetting_by_status(status: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.select().where(companySetting.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
 
 
 
-# add new currency
-@router.post("/addcurrency")
-async def register_currency(currencys: model.CurrencyCreate):
+
+
+
+# add new companySetting
+@router.post("/addcompanySetting")
+async def register_companySetting(companySettings: model.companySettingCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
-        #Adding currency
-    query = currency.insert().values(
+   
 
-            currency_id = usid,
-            user_id=currencys.user_id,
-            currency_country=currencys.currency_country, 
-            description=currencys.description,
-            currency_code= currencys.currency_code,
+    #Adding companySetting
+    query = companySetting.insert().values(
+
+            org_setting_id= usid,
+
+            user_id=companySettings.user_id,
+            currency_id=companySettings.currency_id, 
+            organization_name=companySettings.organization_name,
+            organization_tel=companySettings.organization_tel, 
+            organization_tel2=companySettings.organization_tel2,
+            organization_email=companySettings.organization_email,
+            organization_address=companySettings.organization_address,
+            organization_address2=companySettings.organization_address2,
+            organization_street=companySettings.organization_street,
+            organization_city=companySettings.organization_city,
+            organization_state=companySettings.organization_state, 
+            zip_code=companySettings.zip_code, 
+            organization_website=companySettings.organization_website,
+            organization_description=companySettings.organization_description,
+            country_id=companySettings.country_id,
+            organization_reg_number=companySettings.organization_reg_number,
+            organization_affiliation_num=companySettings.organization_affiliation_num,
+            organization_logo=companySettings.organization_logo,
+            organization_head=companySettings.organization_head, 
+            organization_footer_note=companySettings.organization_footer_note,
             
             created_at = gdate,
             last_update_at=gdate,
@@ -84,46 +116,62 @@ async def register_currency(currencys: model.CurrencyCreate):
     await database.execute(query)
 
     return{
-            "code":"CODE: " + currencys.currency_code,
-            "Message":currencys.currency_country+" code has been registered",
+            "code":"ORGANISATION: " + companySettings.organization_name,
+            "Message":companySettings.organization_name+"  has been registered",
             "status": 1
         }
 
 
 
-#Update currency
-@router.put("/currency_update")
-async def update_currency(cstm: model.CurrencyUpdate, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
+#Update companySetting
+@router.put("/companySetting_update")
+async def update_companySetting(companySettings: model.companySettingUpdate, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
 
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = currency.update().where(currency.c.currency_id == cstm.currency_id).values(
+    Query = companySetting.update().where(companySetting.c.org_setting_id == companySettings.org_setting_id).values(
             
-            currency_id = cstm.currency_id,
+            org_setting_id= gid,
 
-            user_id=cstm.user_id,
-            currency_country=cstm.currency_country, 
-            currency_code= cstm.currency_code,
-            description=cstm.description,
+            user_id=companySettings.user_id,
+            currency_id=companySettings.currency_id, 
+            organization_name=companySettings.organization_name,
+            organization_tel=companySettings.organization_tel, 
+            organization_tel2=companySettings.organization_tel2,
+            organization_email=companySettings.organization_email,
+            organization_address=companySettings.organization_address,
+            organization_address2=companySettings.organization_address2,
+            organization_street=companySettings.organization_street,
+            organization_city=companySettings.organization_city,
+            organization_state=companySettings.organization_state, 
+            zip_code=companySettings.zip_code, 
+            organization_website=companySettings.organization_website,
+            organization_description=companySettings.organization_description,
+            country_id=companySettings.country_id,
+            organization_reg_number=companySettings.organization_reg_number,
+            organization_affiliation_num=companySettings.organization_affiliation_num,
+            organization_logo=companySettings.organization_logo,
+            organization_head=companySettings.organization_head, 
+            organization_footer_note=companySettings.organization_footer_note,
             
-            status = "1",
             created_at = gdate,
-            last_update_at=gdate
+            last_update_at=gdate,
+            status = "1"
             
     )
 
     await database.execute(Query)
     return ({
-       "Msg:":cstm.currency_country+" has been Updated.Thank you for using this software"
+       "Msg:":companySettings.organization_name+" has been Updated. Thank you for using this software"
     })
 
 
 
-#Delete currency
-@router.delete("/Delete_currency/{currency_id}")
-async def Delete_by_currency_id(currency_id: str, currentUser: model.CurrencyList = Depends(util.get_current_active_user)):
-    query = currency.delete().where(currency.c.currency_id == currency_id)
+#Delete companySetting
+@router.delete("/Delete_companySetting/{org_setting_id}")
+async def Delete_by_companySetting_id(org_setting_id: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
+    query = companySetting.delete().where(companySetting.c.org_setting_id == org_setting_id)
     await database.execute(query)
 
     return ({

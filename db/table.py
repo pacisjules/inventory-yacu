@@ -85,7 +85,7 @@ currency = sqlalchemy.Table(
 
 
 
-#4 Table companySetting
+#5 Table companySetting
 companySetting = sqlalchemy.Table(
     "companySetting",
     metadata,
@@ -117,7 +117,7 @@ companySetting = sqlalchemy.Table(
 )
 
 
-#5 Table store
+#6 Table store
 stores = sqlalchemy.Table(
     "stores",
     metadata,
@@ -136,7 +136,7 @@ stores = sqlalchemy.Table(
 
 
 
-#6 Table category
+#7 Table category
 category = sqlalchemy.Table(
     "category",
     metadata,
@@ -152,7 +152,9 @@ category = sqlalchemy.Table(
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
 
-#7 Table product
+
+
+#8 Table product
 product = sqlalchemy.Table(
     "product",
     metadata,
@@ -172,7 +174,8 @@ product = sqlalchemy.Table(
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
 
-#8 Table item
+
+#9 Table item
 item = sqlalchemy.Table(
     "item",
     metadata,
@@ -190,7 +193,7 @@ item = sqlalchemy.Table(
 
 
 
-#9 Table orders
+#10 Table orders
 orders = sqlalchemy.Table(
     "orders",
     metadata,
@@ -208,7 +211,7 @@ orders = sqlalchemy.Table(
 )
 
 
-#10 Table userSection
+#11 Table userSection
 userSection = sqlalchemy.Table(
     "userSection",
     metadata,
@@ -221,7 +224,7 @@ userSection = sqlalchemy.Table(
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
 
-#11 Table UserGroup table
+#12 Table UserGroup table
 userGroup = sqlalchemy.Table(
     "userGroup",
     metadata,
@@ -235,7 +238,7 @@ userGroup = sqlalchemy.Table(
 )
 
 
-#12 Table UserDetail table
+#13 Table UserDetail table
 userDetail = sqlalchemy.Table(
     "userDetail",
     metadata,
@@ -251,7 +254,7 @@ userDetail = sqlalchemy.Table(
 #currency
 
 
-#13 Table Theme setting
+#14 Table Theme setting
 themeSetting = sqlalchemy.Table(
     "themeSetting",
     metadata,

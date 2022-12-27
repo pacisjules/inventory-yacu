@@ -1,2 +1,2 @@
 # inventory-yacu
- Software for managing inventiry
+ Software for managing inventory

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-class ThemesettingCreate(BaseModel):
+class themesettingCreate(BaseModel):
 
     #theme_id_id:str =  Field(..., example="Enter currency id")
     user_id:str =  Field(..., example="user id")
@@ -8,7 +8,7 @@ class ThemesettingCreate(BaseModel):
 
 
 
-class ThemesettingList(BaseModel):
+class themesettingList(BaseModel):
 
     theme_id:str 
     user_id:str 
@@ -18,7 +18,7 @@ class ThemesettingList(BaseModel):
     created_at:str
     last_update_at:str
 
-class ThemesettingUpdate(BaseModel):
+class themesettingUpdate(BaseModel):
     
     theme_id:str 
     user_id:str 

@@ -78,9 +78,9 @@ from currency import controller as currencyController
 from companySetting import controller as companySettingsController
 from stores import controller as storesController
 
-from section import controller as sectionController
-from group import controller as groupController
-from detail import controller as detailController
+from UserSection import controller as sectionController
+from UserGroup import controller as groupController
+from UserDetail import controller as detailController
 
 
 #Config Parts

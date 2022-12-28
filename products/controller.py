@@ -70,7 +70,7 @@ async def find_product_by_status(status: str, currentUser: model.productList = D
 
 # add new product
 @router.post("/addstore")
-async def register_store(pdcts: model.storeCreate):
+async def register_store(pdcts: model.productCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())

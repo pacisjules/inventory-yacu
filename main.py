@@ -81,6 +81,7 @@ from stores import controller as storesController
 from UserSection import controller as sectionController
 from UserGroup import controller as groupController
 from UserDetail import controller as detailController
+from themeSettings import controller as themeController
 
 
 #Config Parts
@@ -98,6 +99,7 @@ app.include_router(storesController.router, tags=["Stores"])
 app.include_router(sectionController.router, tags=["Sections"])
 app.include_router(groupController.router, tags=["Groups"])
 app.include_router(detailController.router, tags=["Details"])
+app.include_router(themeController.router, tags=["ThemeSettings"])
 
 
 

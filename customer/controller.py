@@ -15,7 +15,7 @@ router = APIRouter()
 # All Customers
 @router.get("/all_customers", response_model=Page[model.CustomerList])
 async def find_allCustomer(currentUser: model.CustomerList = Depends(util.get_current_active_user)):
-    query = customer.select().order_by(customer.c.id.desc())
+    query = customer.select().order_by(customer.c.cust_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -33,7 +33,7 @@ async def find_like_customer(names: str, currentUser: model.CustomerList = Depen
 #counting all customers
 @router.get("/count_customers")
 async def count_all_count(currentUser: model.CustomerList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(id) FROM customer"
+    query = "SELECT COUNT(cust_id) as NumberOfCustomers FROM customer"
     res= await database.fetch_all(query=query, values={})
     return res
 
@@ -41,7 +41,7 @@ async def count_all_count(currentUser: model.CustomerList = Depends(util.get_cur
 #Find one Customer by ID
 @router.get("/Customer/{Customer_id}", response_model=model.CustomerList)
 async def find_Customer_by_id(Customer_id: str, currentUser: model.CustomerList = Depends(util.get_current_active_user)):
-    query = customer.select().where(customer.c.id == Customer_id)
+    query = customer.select().where(customer.c.cust_id == Customer_id)
     return await database.fetch_one(query)
 
 
@@ -124,7 +124,7 @@ async def register_Customer(customers: model.CustomerCreate):
         #Adding Customer
         query = customer.insert().values(
             
-            id = gid,
+            cust_id = gid,
             
             user_id=customers.user_id,
             names=customers.names, 
@@ -175,9 +175,9 @@ async def update_Customer(cstm: model.CustomerUpdate, currentUser: model.Custome
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = customer.update().where(customer.c.id == cstm.id).values(
+    Query = customer.update().where(customer.c.cust_id == cstm.cust_id).values(
        
-        id = gid,
+        cust_id = gid,
 
         user_id=cstm.user_id,
         names=cstm.names, 
@@ -196,11 +196,15 @@ async def update_Customer(cstm: model.CustomerUpdate, currentUser: model.Custome
     )
 
     await database.execute(Query)
-    return await find_Customer_by_id(cstm.id)
+    return await find_Customer_by_id(cstm.cust_id)
 
 
 #Delete Customer
-@router.delete("/Delete_Customer/{Customer_id}", response_model=model.CustomerList)
+@router.delete("/Delete_Customer/{Customer_id}")
 async def Delete_by_Customer_id(Customer_id: str, currentUser: model.CustomerList = Depends(util.get_current_active_user)):
-    query = customer.delete().where(customer.c.id == Customer_id)
-    return await database.execute(query)
+    query = customer.delete().where(customer.c.cust_id == Customer_id)
+    await database.execute(query)
+
+    return ({
+       "Msg:":"Customer has been deleted. Thank you for using this software"
+    })

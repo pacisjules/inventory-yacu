@@ -16,7 +16,7 @@ class CustomerCreate(BaseModel):
 
 class CustomerList(BaseModel):
 
-    id: str
+    cust_id: str
 
     user_id:str
     names:str 
@@ -39,7 +39,7 @@ class CustomerList(BaseModel):
 
 class CustomerUpdate(BaseModel):
     
-    id: str
+    cust_id: str
     
     user_id:str
     names:str 

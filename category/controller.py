@@ -62,8 +62,8 @@ async def find_category_by_status(status: str, currentUser: model.categoryList =
 
 
 # add new category
-@router.post("/addstore")
-async def register_store(ctgr: model.storeCreate):
+@router.post("/addcategory")
+async def register_category(ctgr: model.categoryCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())

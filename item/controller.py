@@ -69,7 +69,7 @@ async def find_item_by_status(status: str, currentUser: model.itemList = Depends
 
 # add new item
 @router.post("/addstore")
-async def register_store(itm: model.storeCreate):
+async def register_store(itm: model.itemCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())

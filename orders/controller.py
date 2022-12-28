@@ -14,15 +14,15 @@ router = APIRouter()
 
 
 # All orders
-@router.get("/all_orders", response_model=Page[model.ordersList])
-async def find_all_orders(currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/all_orders", response_model=Page[model.orderList])
+async def find_all_orders(currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.select().orders_by(orders.c.order_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
 # Find orders with customer id
-@router.get("/like_orders/{customer}", response_model=Page[model.ordersList])
-async def find_like_orders(customer: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/like_orders/{customer}", response_model=Page[model.orderList])
+async def find_like_orders(customer: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = "select * from orders where cust_id like '%{}%'".format(customer)
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
@@ -30,36 +30,36 @@ async def find_like_orders(customer: str, currentUser: model.ordersList = Depend
 
 #counting all orders
 @router.get("/count_orderss")
-async def count_all_count(currentUser: model.ordersList = Depends(util.get_current_active_user)):
+async def count_all_count(currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = "SELECT COUNT(orders_id) as NumberOforderss FROM orders"
     res= await database.fetch_all(query=query, values={})
     return res
  
 
 #Find one orders by ID
-@router.get("/orders/{order_id}", response_model=model.ordersList)
-async def find_orders_by_id(order_id: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/orders/{order_id}", response_model=model.orderList)
+async def find_orders_by_id(order_id: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.select().where(orders.c.order_id == order_id)
     return await database.fetch_one(query)
 
 
 #Find one orders by order date
-@router.get("/orders/{date}", response_model=model.ordersList)
-async def find_orders_by_date(date: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/orders/{date}", response_model=model.orderList)
+async def find_orders_by_date(date: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.select().where(orders.c.order_date == date)
     return await database.fetch_one(query)
 
 
 #Find one orders by users
-@router.get("/orders_user{userId}", response_model=model.ordersList)
-async def find_orders_by_user(userId: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/orders_user{userId}", response_model=model.orderList)
+async def find_orders_by_user(userId: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.select().where(orders.c.user_id == userId)
     return await database.fetch_one(query)
 
 
 # Find orders by status
-@router.get("/orders_by_status/{status}", response_model=Page[model.ordersList])
-async def find_orders_by_status(status: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+@router.get("/orders_by_status/{status}", response_model=Page[model.orderList])
+async def find_orders_by_status(status: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.select().where(orders.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
@@ -68,7 +68,7 @@ async def find_orders_by_status(status: str, currentUser: model.ordersList = Dep
 
 # add new orders
 @router.post("/addstore")
-async def register_store(ords: model.storeCreate):
+async def register_store(ords: model.orderCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
@@ -101,12 +101,12 @@ async def register_store(ords: model.storeCreate):
 
 #Update orders
 @router.put("/orders_update")
-async def update_orders(ords: model.ordersUpdate, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+async def update_orders(ords: model.orderUpdate, currentUser: model.orderList = Depends(util.get_current_active_user)):
 
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = orders.update().where(orders.c.orders_id == ords.order_id).values(
+    Query = orders.update().where(orders.c.order_id == ords.order_id).values(
             
             order_id=gid,
 
@@ -130,7 +130,7 @@ async def update_orders(ords: model.ordersUpdate, currentUser: model.ordersList 
 
 #Delete orders
 @router.delete("/Delete_orders/{order_id}")
-async def Delete_by_orders_id(order_id: str, currentUser: model.ordersList = Depends(util.get_current_active_user)):
+async def Delete_by_orders_id(order_id: str, currentUser: model.orderList = Depends(util.get_current_active_user)):
     query = orders.delete().where(orders.c.order_id == order_id)
     await database.execute(query)
 

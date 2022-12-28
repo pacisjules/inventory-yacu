@@ -16,7 +16,7 @@ class companySettingCreate(BaseModel):
     zip_code:str =  Field(..., example="org code")
     organization_website:str =  Field(..., example="org website")
     organization_description:str =  Field(..., example="org description")
-    country_id:str =  Field(..., example="org country")
+    country_id:int =  Field(..., example="org country")
     organization_reg_number:str =  Field(..., example="org registration number")
     organization_affiliation_num:str =  Field(..., example="org Affiliation")
     organization_logo:str =  Field(..., example="org logo")
@@ -43,7 +43,7 @@ class companySettingList(BaseModel):
     zip_code:str 
     organization_website:str 
     organization_description:str 
-    country_id:str 
+    country_id:int 
     organization_reg_number:str
     organization_affiliation_num:str
     organization_logo:str 
@@ -70,7 +70,7 @@ class companySettingUpdate(BaseModel):
     zip_code:str 
     organization_website:str 
     organization_description:str 
-    country_id:str 
+    country_id:int 
     organization_reg_number:str
     organization_affiliation_num:str
     organization_logo:str 

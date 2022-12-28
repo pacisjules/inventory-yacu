@@ -22,9 +22,7 @@ class companySettingCreate(BaseModel):
     organization_logo:str =  Field(..., example="org logo")
     organization_head:str =  Field(..., example="org head")
     organization_footer_note:str =  Field(..., example="org note")
-    status:str = Field(..., example="org Status")
-    created_at:str =  Field(..., example="created_at")
-    last_update_at:str =  Field(..., example="Last Update")
+    
 
 class companySettingList(BaseModel):
 

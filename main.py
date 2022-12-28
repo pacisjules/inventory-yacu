@@ -77,16 +77,22 @@ from currency import controller as currencyController
 
 from companySetting import controller as companySettingsController
 from stores import controller as storesController
+from themeSettings import controller as themeController
 
 from UserSection import controller as sectionController
 from UserGroup import controller as groupController
-from UserDetail import controller as detailController
-from themeSettings import controller as themeController
+from UserSection import controller as user_detailController
+from category import controller as categoryController
+from products import controller as productsController
+from item import controller as itemsController
+from orders import controller as ordersController
+
 
 
 #Config Parts
 app.include_router(authController.router, tags=["Auth"])
 app.include_router(userController.router, tags=["Users"])
+
 
 #Application Parts
 app.include_router(customerController.router, tags=["Customers"])
@@ -98,8 +104,14 @@ app.include_router(storesController.router, tags=["Stores"])
 
 app.include_router(sectionController.router, tags=["Sections"])
 app.include_router(groupController.router, tags=["Groups"])
-app.include_router(detailController.router, tags=["Details"])
 app.include_router(themeController.router, tags=["ThemeSettings"])
+
+app.include_router(user_detailController.router, tags=["User Details"])
+app.include_router(categoryController.router, tags=["Product Category"])
+
+app.include_router(productsController.router, tags=["Products"])
+app.include_router(itemsController.router, tags=["Items"])
+app.include_router(ordersController.router, tags=["Orders"])
 
 
 

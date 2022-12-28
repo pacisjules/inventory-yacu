@@ -140,9 +140,9 @@ stores = sqlalchemy.Table(
 category = sqlalchemy.Table(
     "category",
     metadata,
-    sqlalchemy.Column("category_id"        , sqlalchemy.String , primary_key=True),
+    sqlalchemy.Column("category_id", sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
-    sqlalchemy.Column("store_id"        , sqlalchemy.String , ForeignKey(stores.c.store_id), nullable=False),
+    sqlalchemy.Column("store_id", sqlalchemy.String , ForeignKey(stores.c.store_id), nullable=False),
     
     sqlalchemy.Column("category_name"  , sqlalchemy.String),
     sqlalchemy.Column("description"  , sqlalchemy.String),
@@ -201,11 +201,12 @@ orders = sqlalchemy.Table(
     sqlalchemy.Column("item_id", sqlalchemy.String, ForeignKey(item.c.item_id), nullable=False),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
     sqlalchemy.Column("cust_id", sqlalchemy.String, ForeignKey(customer.c.cust_id), nullable=False),
+    
     sqlalchemy.Column("quantity"  , sqlalchemy.Integer),
     sqlalchemy.Column("total_price"  , sqlalchemy.Float),
+    sqlalchemy.Column("order_date", sqlalchemy.String),
 
     sqlalchemy.Column("status"    , sqlalchemy.String),
-    sqlalchemy.Column("order_date", sqlalchemy.String),
     sqlalchemy.Column("created_at", sqlalchemy.String),
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )

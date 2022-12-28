@@ -3,10 +3,8 @@ from pydantic import BaseModel, Field
 class categoryCreate(BaseModel):
 
     user_id:str =  Field(..., example="user id")
-    category_name:str =  Field(..., example="user id")
-    address:str =  Field(..., example="user id")
-    description:str =  Field(..., example="user id")
-
+    category_name:str =  Field(..., example="category name")
+    description:str =  Field(..., example="category description")
 
 class categoryList(BaseModel):
 
@@ -14,7 +12,6 @@ class categoryList(BaseModel):
     
     user_id:str 
     category_name:str
-    address:str
     description:str
 
     status: str
@@ -26,7 +23,6 @@ class categoryUpdate(BaseModel):
     category_id:str
     user_id:str 
     category_name:str
-    address:str
     description:str
 
     status: str

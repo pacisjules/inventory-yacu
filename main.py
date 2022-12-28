@@ -75,7 +75,7 @@ from users import controller as userController
 from customer import controller as customerController
 from currency import controller as currencyController
 
-from companySetting import controller as companySettingsController
+from companysetting import controller as companySettingsController
 from stores import controller as storesController
 from themesettingss import controller as themeController
 

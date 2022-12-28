@@ -86,8 +86,8 @@ currency = sqlalchemy.Table(
 
 
 #5 Table companySetting
-companySetting = sqlalchemy.Table(
-    "companySetting",
+companysetting = sqlalchemy.Table(
+    "companysetting",
     metadata,
     sqlalchemy.Column("org_setting_id"        , sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
@@ -122,7 +122,7 @@ stores = sqlalchemy.Table(
     "stores",
     metadata,
     sqlalchemy.Column("store_id"        , sqlalchemy.String , primary_key=True),
-    sqlalchemy.Column("org_setting_id"  , sqlalchemy.String, ForeignKey(companySetting.c.org_setting_id)),
+    sqlalchemy.Column("org_setting_id"  , sqlalchemy.String, ForeignKey(companysetting.c.org_setting_id)),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
 
     sqlalchemy.Column("store_name"  , sqlalchemy.String),

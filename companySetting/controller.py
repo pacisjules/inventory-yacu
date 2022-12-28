@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from db.table import companySetting
+from db.table import companysetting
 from utils import util
-from companySetting import model
+from companysetting import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse
@@ -15,7 +15,7 @@ router = APIRouter()
 # All companySetting
 @router.get("/all_companySetting", response_model=Page[model.companySettingList])
 async def find_all_companySettings(currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.select().order_by(companySetting.c.org_setting_id.desc())
+    query = companysetting.select().order_by(companysetting.c.org_setting_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -26,14 +26,14 @@ async def find_all_companySettings(currentUser: model.companySettingList = Depen
 @router.get("/like_companySetting/{names}", response_model=Page[model.companySettingList])
 async def find_like_companySetting(names: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
 
-    query = "select * from companySetting where organization_name like '%{}%'".format(names)
+    query = "select * from companysetting where organization_name like '%{}%'".format(names)
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
 
 #counting all companySettings
 @router.get("/count_companySettings")
 async def count_all_companies(currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(org_setting_id) as NumberOfCompanies FROM companySetting"
+    query = "SELECT COUNT(org_setting_id) as NumberOfCompanies FROM companysetting"
     res= await database.fetch_all(query=query, values={})
     return res
  
@@ -41,7 +41,7 @@ async def count_all_companies(currentUser: model.companySettingList = Depends(ut
 #Find one companySetting by ID
 @router.get("/companySetting/{org_setting_id}", response_model=model.companySettingList)
 async def find_companySetting_by_id(org_setting_id: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.select().where(companySetting.c.org_setting_id == org_setting_id)
+    query = companysetting.select().where(companysetting.c.org_setting_id == org_setting_id)
     return await database.fetch_one(query)
 
 
@@ -51,21 +51,21 @@ async def find_companySetting_by_id(org_setting_id: str, currentUser: model.comp
 #Find one companySetting by tel 1
 @router.get("/companySetting_tel/{organization_tel}", response_model=model.companySettingList)
 async def find_companySetting_by_telephone(organization_tel: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.select().where(companySetting.c.organization_tel == organization_tel)
+    query = companysetting.select().where(companysetting.c.organization_tel == organization_tel)
     return await database.fetch_one(query)
 
 
 #Find one companySetting by tel 2
 @router.get("/companySetting_tel1/{organization_tel2}", response_model=model.companySettingList)
 async def find_companySetting_by_telephone(organization_tel2: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.select().where(companySetting.c.organization_tel2 == organization_tel2)
+    query = companysetting.select().where(companysetting.c.organization_tel2 == organization_tel2)
     return await database.fetch_one(query)
 
 
 # Find companySettings by status
 @router.get("/companySetting_by_status/{status}", response_model=Page[model.companySettingList])
 async def find_companySetting_by_status(status: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.select().where(companySetting.c.status == status)
+    query = companysetting.select().where(companysetting.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -83,7 +83,7 @@ async def register_companySetting(companySettings: model.companySettingCreate):
    
 
     #Adding companySetting
-    query = companySetting.insert().values(
+    query = companysetting.insert().values(
 
             org_setting_id= usid,
 
@@ -130,7 +130,7 @@ async def update_companySetting(companySettings: model.companySettingUpdate, cur
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = companySetting.update().where(companySetting.c.org_setting_id == companySettings.org_setting_id).values(
+    Query = companysetting.update().where(companysetting.c.org_setting_id == companySettings.org_setting_id).values(
             
             org_setting_id= gid,
 
@@ -171,7 +171,7 @@ async def update_companySetting(companySettings: model.companySettingUpdate, cur
 #Delete companySetting
 @router.delete("/Delete_companySetting/{org_setting_id}")
 async def Delete_by_companySetting_id(org_setting_id: str, currentUser: model.companySettingList = Depends(util.get_current_active_user)):
-    query = companySetting.delete().where(companySetting.c.org_setting_id == org_setting_id)
+    query = companysetting.delete().where(companysetting.c.org_setting_id == org_setting_id)
     await database.execute(query)
 
     return ({

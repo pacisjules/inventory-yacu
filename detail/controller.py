@@ -113,7 +113,7 @@ async def update_detail(cstm: model.DetailUpdate, currentUser: model.DetailList 
 
 #Delete group
 @router.delete("/Delete_detail/{detail_id}")
-async def Delete_by_detail_id(detail_id: str, currentUser: model.detailList = Depends(util.get_current_active_user)):
+async def Delete_by_detail_id(detail_id: str, currentUser: model.DetailList = Depends(util.get_current_active_user)):
     query = userDetail.delete().where(userDetail.c.detail_id == detail_id)
     await database.execute(query)
 

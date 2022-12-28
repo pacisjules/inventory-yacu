@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from db.table import companysetting
 from utils import util
-from companysetting import model
+from companySetting import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse

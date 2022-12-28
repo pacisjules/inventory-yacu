@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from db.table import userGroup
+from db.table import usergroup
 from utils import util
-from UserGroup import model
+from usergroups import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse
@@ -15,7 +15,7 @@ router = APIRouter()
 # All groups
 @router.get("/all_group", response_model=Page[model.GroupList])
 async def find_all_groups(currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = userGroup.select().order_by(userGroup.c.group_id.desc())
+    query = usergroup.select().order_by(usergroup.c.group_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -24,7 +24,7 @@ async def find_all_groups(currentUser: model.GroupList = Depends(util.get_curren
 @router.get("/like_group/{name}", response_model=Page[model.GroupList])
 async def find_like_group(name: str, currentUser: model.GroupList = Depends(util.get_current_active_user)):
 
-    query = "SELECT * FROM userGroup WHERE group_name LIKE '%{}%'".format(name)
+    query = "SELECT * FROM usergroup WHERE group_name LIKE '%{}%'".format(name)
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
 
@@ -33,7 +33,7 @@ async def find_like_group(name: str, currentUser: model.GroupList = Depends(util
 #counting all groups
 @router.get("/count_groups")
 async def count_all_groups(currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(group_id) as NumberOfGroup FROM userGroup"
+    query = "SELECT COUNT(group_id) as NumberOfGroup FROM usergroup"
     res= await database.fetch_all(query=query, values={})
     return res
  
@@ -41,7 +41,7 @@ async def count_all_groups(currentUser: model.GroupList = Depends(util.get_curre
 #Find one group by ID
 @router.get("/group/{group_id}", response_model=model.GroupList)
 async def find_group_by_id(group_id: str, currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = userGroup.select().where(userGroup.c.group_id == group_id)
+    query = usergroup.select().where(usergroup.c.group_id == group_id)
     return await database.fetch_one(query)
 
 
@@ -49,7 +49,7 @@ async def find_group_by_id(group_id: str, currentUser: model.GroupList = Depends
 # Find section by status
 @router.get("/group_by_status/{status}", response_model=Page[model.GroupList])
 async def find_group_by_status(status: str, currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = userGroup.select().where(userGroup.c.status == status)
+    query = usergroup.select().where(usergroup.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -62,7 +62,7 @@ async def register_group(groups: model.GroupCreate):
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
         #Adding new group
-    query = userGroup.insert().values(
+    query = usergroup.insert().values(
 
             group_id = usid,
             user_id=groups.user_id,
@@ -90,7 +90,7 @@ async def update_group(cstm: model.GroupUpdate, currentUser: model.GroupList = D
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = userGroup.update().where(userGroup.c.group_id == cstm.group_id).values(
+    Query = usergroup.update().where(usergroup.c.group_id == cstm.group_id).values(
             
             group_id = cstm.group_id,
 
@@ -114,7 +114,7 @@ async def update_group(cstm: model.GroupUpdate, currentUser: model.GroupList = D
 #Delete group
 @router.delete("/Delete_group/{group_id}")
 async def Delete_by_group_id(group_id: str, currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = userGroup.delete().where(userGroup.c.group_id == group_id)
+    query = usergroup.delete().where(usergroup.c.group_id == group_id)
     await database.execute(query)
 
     return ({

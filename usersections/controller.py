@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from db.table import userSection
+from db.table import usersection
 from utils import util
-from UserSection import model
+from usersections import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse
@@ -15,16 +15,16 @@ router = APIRouter()
 # All Sections
 @router.get("/all_section", response_model=Page[model.SectionList])
 async def find_all_sections(currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = userSection.select().order_by(userSection.c.section_id.desc())
+    query = usersection.select().order_by(usersection.c.section_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
 
 # Find section with name
-@router.get("/like_section/{name}", response_model=Page[model.SectionList])
-async def find_like_section(name: str, currentUser: model.SectionList = Depends(util.get_current_active_user)):
+@router.get("/like_section/{Uname}", response_model=Page[model.SectionList])
+async def find_like_section(Uname: str, currentUser: model.SectionList = Depends(util.get_current_active_user)):
 
-    query = "SELECT * FROM userSection WHERE section_name LIKE '%{}%'".format(name)
+    query = "SELECT * FROM usersection WHERE section_name LIKE '%{}%'".format(Uname)
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
 
@@ -33,7 +33,7 @@ async def find_like_section(name: str, currentUser: model.SectionList = Depends(
 #counting all sections
 @router.get("/count_sections")
 async def count_all_sections(currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(section_id) as NumberOfSection FROM userSection"
+    query = "SELECT COUNT(section_id) as NumberOfSections FROM usersection"
     res= await database.fetch_all(query=query, values={})
     return res
  
@@ -41,7 +41,7 @@ async def count_all_sections(currentUser: model.SectionList = Depends(util.get_c
 #Find one section by ID
 @router.get("/section/{section_id}", response_model=model.SectionList)
 async def find_section_by_id(section_id: str, currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = userSection.select().where(userSection.c.section_id == section_id)
+    query = usersection.select().where(usersection.c.section_id == section_id)
     return await database.fetch_one(query)
 
 
@@ -49,7 +49,7 @@ async def find_section_by_id(section_id: str, currentUser: model.SectionList = D
 # Find section by status
 @router.get("/section_by_status/{status}", response_model=Page[model.SectionList])
 async def find_section_by_status(status: str, currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = userSection.select().where(userSection.c.status == status)
+    query = usersection.select().where(usersection.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -62,7 +62,7 @@ async def register_section(sections: model.SectionCreate):
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
         #Adding new section
-    query = userSection.insert().values(
+    query = usersection.insert().values(
 
             section_id = usid,
             user_id=sections.user_id,
@@ -90,7 +90,7 @@ async def update_section(cstm: model.SectionUpdate, currentUser: model.SectionLi
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = userSection.update().where(userSection.c.section_id == cstm.section_id).values(
+    Query = usersection.update().where(usersection.c.section_id == cstm.section_id).values(
             
             section_id = cstm.section_id,
 
@@ -114,7 +114,7 @@ async def update_section(cstm: model.SectionUpdate, currentUser: model.SectionLi
 #Delete currency
 @router.delete("/Delete_section/{section_id}")
 async def Delete_by_section_id(section_id: str, currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = userSection.delete().where(userSection.c.section_id == section_id)
+    query = usersection.delete().where(usersection.c.section_id == section_id)
     await database.execute(query)
 
     return ({

@@ -66,12 +66,13 @@ async def find_stores_by_status(status: str, currentUser: model.storeList = Depe
 
 
 # add new stores
-@router.post("/addstore")
+@router.post("/add_store")
 async def register_store(stor: model.storeCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
-        #Adding stores
+    
+    #Adding stores
     query = stores.insert().values(
 
             store_id = usid,
@@ -80,7 +81,8 @@ async def register_store(stor: model.storeCreate):
             store_name=stor.store_name,
             address=stor.address,
             description=stor.description,
-
+            org_setting_id=stor.org_setting_id,
+            
             created_at = gdate,
             last_update_at=gdate,
             status = "1"
@@ -89,7 +91,7 @@ async def register_store(stor: model.storeCreate):
     await database.execute(query)
 
     return{
-            "code":"Store: " + stor.stores_name,
+            "code":"Store: " + stor.store_name,
             "Message":stor.store_name+" code has been registered",
             "status": 1
         }
@@ -111,6 +113,7 @@ async def update_stores(stor: model.storeUpdate, currentUser: model.storeList = 
             store_name=stor.store_name,
             address=stor.address,
             description=stor.description,
+            org_setting_id=stor.org_setting_id,
 
             created_at = gdate,
             last_update_at=gdate,

@@ -77,11 +77,11 @@ from currency import controller as currencyController
 
 from companySetting import controller as companySettingsController
 from stores import controller as storesController
-from themeSettings import controller as themeController
+from themesettingss import controller as themeController
 
-from UserSection import controller as sectionController
-from UserGroup import controller as groupController
-from UserSection import controller as user_detailController
+from usersections import controller as sectionController
+from usergroups import controller as groupController
+from userdetails import controller as user_detailController
 from category import controller as categoryController
 from products import controller as productsController
 from item import controller as itemsController

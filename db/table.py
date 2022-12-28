@@ -122,7 +122,7 @@ stores = sqlalchemy.Table(
     "stores",
     metadata,
     sqlalchemy.Column("store_id"        , sqlalchemy.String , primary_key=True),
-    sqlalchemy.Column("org_setting_id "  , sqlalchemy.String, ForeignKey(companySetting.c.org_setting_id)),
+    sqlalchemy.Column("org_setting_id"  , sqlalchemy.String, ForeignKey(companySetting.c.org_setting_id)),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
 
     sqlalchemy.Column("store_name"  , sqlalchemy.String),
@@ -215,8 +215,8 @@ orders = sqlalchemy.Table(
 
 
 #11 Table userSection
-userSection = sqlalchemy.Table(
-    "userSection",
+usersection = sqlalchemy.Table(
+    "usersection",
     metadata,
     sqlalchemy.Column("section_id"        , sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
@@ -228,8 +228,8 @@ userSection = sqlalchemy.Table(
 )
 
 #12 Table UserGroup table
-userGroup = sqlalchemy.Table(
-    "userGroup",
+usergroup = sqlalchemy.Table(
+    "usergroup",
     metadata,
     sqlalchemy.Column("group_id"        , sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
@@ -242,8 +242,8 @@ userGroup = sqlalchemy.Table(
 
 
 #13 Table UserDetail table
-userDetail = sqlalchemy.Table(
-    "userDetail",
+userdetail = sqlalchemy.Table(
+    "userdetail",
     metadata,
     sqlalchemy.Column("detail_id"        , sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
@@ -258,8 +258,8 @@ userDetail = sqlalchemy.Table(
 
 
 #14 Table Theme setting
-themeSetting = sqlalchemy.Table(
-    "themeSetting",
+themesetting = sqlalchemy.Table(
+    "themesetting",
     metadata,
     sqlalchemy.Column("theme_id"        , sqlalchemy.String , primary_key=True),
     sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),

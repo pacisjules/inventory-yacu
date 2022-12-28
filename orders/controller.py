@@ -67,8 +67,8 @@ async def find_orders_by_status(status: str, currentUser: model.orderList = Depe
 
 
 # add new orders
-@router.post("/addstore")
-async def register_store(ords: model.orderCreate):
+@router.post("/addOrder")
+async def register_Order(ords: model.orderCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())

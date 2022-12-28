@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from db.table import userDetail
+from db.table import userdetail
 from utils import util
-from UserDetail import model
+from userdetails import model
 from configs.connection import database
 import uuid, datetime
 from fastapi.responses import FileResponse
@@ -15,7 +15,7 @@ router = APIRouter()
 # All details
 @router.get("/all_details", response_model=Page[model.DetailList])
 async def find_all_details(currentUser: model.DetailList = Depends(util.get_current_active_user)):
-    query = userDetail.select().order_by(userDetail.c.detail_id.desc())
+    query = userdetail.select().order_by(userdetail.c.detail_id.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -33,7 +33,7 @@ async def find_all_details(currentUser: model.DetailList = Depends(util.get_curr
 #counting all details
 @router.get("/count_detail")
 async def count_all_details(currentUser: model.DetailList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(detail_id) as NumberOfDetail FROM userDetail"
+    query = "SELECT COUNT(detail_id) as NumberOfDetail FROM userdetail"
     res= await database.fetch_all(query=query, values={})
     return res
  
@@ -41,7 +41,7 @@ async def count_all_details(currentUser: model.DetailList = Depends(util.get_cur
 #Find one detail by ID
 @router.get("/detail/{detail_id}", response_model=model.DetailList)
 async def find_detail_by_id(detail_id: str, currentUser: model.DetailList = Depends(util.get_current_active_user)):
-    query = userDetail.select().where(userDetail.c.detail_id == detail_id)
+    query = userdetail.select().where(userdetail.c.detail_id == detail_id)
     return await database.fetch_one(query)
 
 
@@ -49,7 +49,7 @@ async def find_detail_by_id(detail_id: str, currentUser: model.DetailList = Depe
 # Find detail by status
 @router.get("/detail_by_status/{status}", response_model=Page[model.DetailList])
 async def find_detail_by_status(status: str, currentUser: model.DetailList = Depends(util.get_current_active_user)):
-    query = userDetail.select().where(userDetail.c.status == status)
+    query = userdetail.select().where(userdetail.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -62,7 +62,7 @@ async def register_detail(details: model.DetailCreate):
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
         #Adding new group
-    query = userDetail.insert().values(
+    query = userdetail.insert().values(
 
             detail_id = usid,
             user_id=details.user_id,
@@ -90,7 +90,7 @@ async def update_detail(cstm: model.DetailUpdate, currentUser: model.DetailList 
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = userDetail.update().where(userDetail.c.detail_id == cstm.detail_id).values(
+    Query = userdetail.update().where(userdetail.c.detail_id == cstm.detail_id).values(
             
             detail_id = cstm.detail_id,
 
@@ -114,7 +114,7 @@ async def update_detail(cstm: model.DetailUpdate, currentUser: model.DetailList 
 #Delete group
 @router.delete("/Delete_detail/{detail_id}")
 async def Delete_by_detail_id(detail_id: str, currentUser: model.DetailList = Depends(util.get_current_active_user)):
-    query = userDetail.delete().where(userDetail.c.detail_id == detail_id)
+    query = userdetail.delete().where(userdetail.c.detail_id == detail_id)
     await database.execute(query)
 
     return ({

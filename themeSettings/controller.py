@@ -32,7 +32,7 @@ async def find_like_theme(name: str, currentUser: model.ThemeSettingList = Depen
 
 #counting all themes
 @router.get("/count_themes")
-async def count_all_themes(currentUser: model.ThemeSetttingList = Depends(util.get_current_active_user)):
+async def count_all_themes(currentUser: model.ThemeSettingList = Depends(util.get_current_active_user)):
     query = "SELECT COUNT(theme_id) as NumberOfTheme FROM themeSetting"
     res= await database.fetch_all(query=query, values={})
     return res

@@ -60,6 +60,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     isValid = util.verify_password(form_data.password, user.password)
     
     if not isValid:
+
         raise HTTPException(status_code=404, detail="Incorrect username or password")
 
     access_token_expires = util.timedelta(minutes=constant.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -74,7 +75,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         "action":"1",
         "expired_in": constant.ACCESS_TOKEN_EXPIRE_MINUTES*60,
         "user_info": user,
-        
     }
 
     return results

@@ -15,7 +15,7 @@ router = APIRouter()
 # All Sections
 @router.get("/all_section", response_model=Page[model.SectionList])
 async def find_all_sections(currentUser: model.SectionList = Depends(util.get_current_active_user)):
-    query = usersection.select().order_by(usersection.c.section_id.desc())
+    query = usersection.select().order_by(usersection.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 

@@ -28,7 +28,7 @@ async def find_all_user(
 #Find one User by ID
 @router.get("/users/{User_id}", response_model=model.UserList)
 async def find_user_by_id(User_id: str, currentUser: model.UserList = Depends(util.get_current_active_user)):
-    query = users.select().where(users.c.id == User_id)
+    query = users.select().where(users.c.user_id == User_id)
     return await database.fetch_one(query)
 
 

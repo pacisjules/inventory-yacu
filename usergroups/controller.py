@@ -15,7 +15,7 @@ router = APIRouter()
 # All groups
 @router.get("/all_group", response_model=Page[model.GroupList])
 async def find_all_groups(currentUser: model.GroupList = Depends(util.get_current_active_user)):
-    query = usergroup.select().order_by(usergroup.c.group_id.desc())
+    query = usergroup.select().order_by(usergroup.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 

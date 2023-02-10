@@ -69,8 +69,8 @@ async def find_product_by_status(status: str, currentUser: model.productList = D
 
 
 # add new product
-@router.post("/addstore")
-async def register_store(pdcts: model.productCreate):
+@router.post("/addproduct")
+async def register_product(pdcts: model.productCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
@@ -95,7 +95,7 @@ async def register_store(pdcts: model.productCreate):
     await database.execute(query)
 
     return{
-            "code":"Store: " + pdcts.product_name,
+            "code":"Product: " + pdcts.product_name,
             "Message":pdcts.product_name+" product has been registered",
             "status": 1
         }

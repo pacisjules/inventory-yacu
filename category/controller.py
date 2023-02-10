@@ -74,7 +74,8 @@ async def register_category(ctgr: model.categoryCreate):
             category_id = usid,
             
             user_id=ctgr.user_id,
-            category_name=ctgr.address,
+            store_id=ctgr.store_id,
+            category_name=ctgr.category_name,
             description=ctgr.description,
 
             created_at = gdate,
@@ -103,6 +104,7 @@ async def update_category(ctgr: model.categoryUpdate, currentUser: model.categor
             category_id = gid,
             
             user_id=ctgr.user_id,
+            store_id=ctgr.store_id,
             category_name=ctgr.category_name,
             description=ctgr.description,
 

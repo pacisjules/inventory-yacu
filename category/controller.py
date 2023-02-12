@@ -33,10 +33,15 @@ async def find_like_category(name: str, currentUser: model.categoryList = Depend
 #counting all category
 @router.get("/count_categorys")
 async def count_all_count(currentUser: model.categoryList = Depends(util.get_current_active_user)):
-    query = "SELECT COUNT(category_id) as NumberOfcategories FROM category"
+    query = "SELECT COUNT(category_id) FROM category"
     res= await database.fetch_all(query=query, values={})
     return res
- 
+# all category names
+@router.get("/category_names")
+async def get_category_names(currentUser: model.categoryList = Depends(util.get_current_active_user)):
+    query = "SELECT category_name  FROM category"
+    res= await database.fetch_all(query=query, values={})
+    return res 
 
 #Find one category by ID
 @router.get("/category/{category_id}", response_model=model.categoryList)

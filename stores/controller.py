@@ -37,7 +37,13 @@ async def count_all_count(currentUser: model.storeList = Depends(util.get_curren
     query = "SELECT COUNT(store_id) as NumberOfStores FROM stores"
     res= await database.fetch_all(query=query, values={})
     return res
- 
+
+#Get all stores names
+@router.get("/store_names")
+async def count_all_count(currentUser: model.storeList = Depends(util.get_current_active_user)):
+    query = "SELECT store_name as NameOfStore FROM stores"
+    res= await database.fetch_all(query=query, values={})
+    return res 
 
 #Find one stores by ID
 @router.get("/stores/{stores_id}", response_model=model.storeList)

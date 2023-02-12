@@ -39,7 +39,7 @@ async def count_all_count(currentUser: model.categoryList = Depends(util.get_cur
 # all category names
 @router.get("/category_names")
 async def get_category_names(currentUser: model.categoryList = Depends(util.get_current_active_user)):
-    query = "SELECT category_name  FROM category"
+    query = "SELECT category_id, category_name  FROM category"
     res= await database.fetch_all(query=query, values={})
     return res 
 

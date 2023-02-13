@@ -17,7 +17,7 @@ router = APIRouter()
 # All products
 @router.get("/all_product", response_model=Page[model.productList])
 async def find_all_products(currentUser: model.productList = Depends(util.get_current_active_user)):
-    query = product.select().order_by(product.c.product_id.desc())
+    query = product.select().order_by(product.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 
@@ -79,7 +79,7 @@ async def register_product(pdcts: model.productCreate):
     query = product.insert().values(
 
             product_id=usid,
-    
+            store_id=pdcts.store_id,
             user_id=pdcts.user_id,
             category_id=pdcts.category_id,
             product_name=pdcts.product_name,
@@ -111,7 +111,7 @@ async def update_product(pdcts: model.productUpdate, currentUser: model.productL
     Query = product.update().where(product.c.product_id == pdcts.product_id).values(
             
             product_id=gid,
-    
+            store_id=pdcts.store_id,
             user_id=pdcts.user_id,
             category_id=pdcts.category_id,
             product_name=pdcts.product_name,

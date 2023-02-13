@@ -15,7 +15,7 @@ router = APIRouter()
 # All categories
 @router.get("/all_category", response_model=Page[model.categoryList])
 async def find_all_categories(currentUser: model.categoryList = Depends(util.get_current_active_user)):
-    query = category.select().order_by(category.c.category_id.desc())
+    query = category.select().order_by(category.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 

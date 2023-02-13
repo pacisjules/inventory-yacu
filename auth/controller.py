@@ -33,6 +33,7 @@ async def register(user: model.UserCreate):
         type = user.type,
         role = user.role,
         company= user.company,
+        organization_ID=user.organization_ID,
         phone= user.phone,    
         living= user.living,
         created_at = gdate,

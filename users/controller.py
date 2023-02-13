@@ -39,27 +39,28 @@ async def update_user(user: model.UserUpdate, currentUser: model.UserList = Depe
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = users.update().where(users.c.id == user.id).values(
-        id = gid,
-        username = user.username,
-        password = util.get_password_hash(user.password),
+    Query = users.update().where(users.c.user_id == user.user_id).values(
+        # user_id = gid,
+        #username = user.username,
+        #password = util.get_password_hash(user.password),
 
-        first_name= user.first_name,
-        last_name=user.last_name,
+        #first_name= user.first_name,
+        #last_name=user.last_name,
 
-        email = user.email,
-        type = user.type,
-        role = user.role,
-        company= user.company,   
-        phone= user.phone,    
-        living= user.living,
+        #email = user.email,
+        # type = user.type,
+        # role = user.role,
+        #company= user.company,
+        organization_ID=user.organization_ID,
+        # phone= user.phone,    
+        # living= user.living,
 
-        last_update_at = gdate,
-        status = "1"
+        #last_update_at = gdate,
+        #status = "1"
     )
 
     await database.execute(Query)
-    return await find_user_by_id(user.id)
+    return await find_user_by_id(user.user_id)
 
 
 

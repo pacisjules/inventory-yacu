@@ -31,12 +31,13 @@ async def find_like_stores(name: str, currentUser: model.storeList = Depends(uti
 
 
 
-#counting all storess
+#counting all stores
 @router.get("/count_storess")
 async def count_all_count(currentUser: model.storeList = Depends(util.get_current_active_user)):
     query = "SELECT COUNT(store_id) as NumberOfStores FROM stores"
     res= await database.fetch_all(query=query, values={})
     return res
+
 
 #Get all stores names
 @router.get("/store_names")
@@ -45,14 +46,13 @@ async def count_all_count(currentUser: model.storeList = Depends(util.get_curren
     res= await database.fetch_all(query=query, values={})
     return res 
 
+
+
 #Find one stores by ID
-@router.get("/stores/{stores_id}", response_model=model.storeList)
-async def find_stores_by_id(stores_id: str, currentUser: model.storeList = Depends(util.get_current_active_user)):
-    query = stores.select().where(stores.c.store_id == stores_id)
+@router.get("/stores/{store_id}", response_model=model.storeList)
+async def find_stores_by_id(store_id: str, currentUser: model.storeList = Depends(util.get_current_active_user)):
+    query = "select * from stores where store_id like '%{}%'".format(store_id)
     return await database.fetch_one(query)
-
-
-
 
 
 #Find one stores by users
@@ -68,7 +68,6 @@ async def find_stores_by_status(status: str, currentUser: model.storeList = Depe
     query = stores.select().where(stores.c.status == status)
     res = await database.fetch_all(query)
     return paginate(res)
-
 
 
 # add new stores

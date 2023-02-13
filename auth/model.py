@@ -13,9 +13,8 @@ class UserCreate(BaseModel):
     type: str    = Field(..., example="Normal")
     role:str = Field(..., example="Manager")
 
-
-
     company: str    = Field(..., example="Company")
+    organization_ID:str = Field(..., example="Organization ID")
     phone: str    = Field(..., example="phone")
     living: str    = Field(..., example="Kigali")
 
@@ -27,7 +26,8 @@ class UserList(BaseModel):
     email: str
     type: str 
     role:str
-    company: str    
+    company: str
+    organization_ID: str    
     phone: str    
     living: str 
     status: str
@@ -37,30 +37,31 @@ class UserList(BaseModel):
 
 class UserListforUpdate(BaseModel):
     user_id: str
-    username: str
-    password: str
-    first_name: str 
-    last_name: str 
-    email: str
-    type: str 
-    role:str
-    company: str    
-    phone: str    
-    living: str 
-    status: str
+    # username: str
+    # password: str
+    # first_name: str 
+    # last_name: str 
+    # email: str
+    # type: str 
+    # role:str
+    # company: str
+    organization_ID: str      
+    # phone: str    
+    # living: str 
 
 class UserUpdate(BaseModel):
-    id: str
-    username: str
-    password: str
-    first_name: str 
-    last_name: str 
-    email: str
-    type: str 
-    role:str
-    company: str    
-    phone: str    
-    living: str 
+    user_id: str
+    # username: str
+    # password: str
+    # first_name: str 
+    # last_name: str 
+    # email: str
+    # type: str 
+    # role:str
+    # company: str
+    organization_ID: str      
+    # phone: str    
+    # living: str 
 
 
 

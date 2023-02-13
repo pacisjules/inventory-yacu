@@ -20,6 +20,7 @@ users = sqlalchemy.Table(
     sqlalchemy.Column("role"     , sqlalchemy.String),
 
     sqlalchemy.Column("company"     , sqlalchemy.String),
+    sqlalchemy.Column("organization_ID", sqlalchemy.String),
     sqlalchemy.Column("phone"     , sqlalchemy.String, unique=True),
     sqlalchemy.Column("living"     , sqlalchemy.String),
 

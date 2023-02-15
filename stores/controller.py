@@ -19,8 +19,6 @@ async def find_all_stores(currentUser: model.storeList = Depends(util.get_curren
     res = await database.fetch_all(query)
     return paginate(res)
 
-
-
 # Find stores with names
 @router.get("/like_stores/{name}", response_model=Page[model.storeList])
 async def find_like_stores(name: str, currentUser: model.storeList = Depends(util.get_current_active_user)):
@@ -122,7 +120,7 @@ async def update_stores(stor: model.storeUpdate, currentUser: model.storeList = 
 
             created_at = gdate,
             last_update_at=gdate,
-            status = "1"
+            status = stor.status
             
     )
 

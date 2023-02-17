@@ -83,9 +83,6 @@ currency = sqlalchemy.Table(
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
 
-
-
-
 #5 Table companySetting
 companysetting = sqlalchemy.Table(
     "companysetting",
@@ -193,7 +190,6 @@ item = sqlalchemy.Table(
 )
 
 
-
 #10 Table orders
 orders = sqlalchemy.Table(
     "orders",
@@ -211,9 +207,6 @@ orders = sqlalchemy.Table(
     sqlalchemy.Column("created_at", sqlalchemy.String),
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
-
-
-
 
 #11 Table userSection
 usersection = sqlalchemy.Table(
@@ -270,6 +263,60 @@ themesetting = sqlalchemy.Table(
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
 
+
+#15 Table distributor
+distributor = sqlalchemy.Table(
+    "distributor",
+    metadata,
+    sqlalchemy.Column("distributor_id"        , sqlalchemy.String , primary_key=True),
+    sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
+    
+    sqlalchemy.Column("names"  , sqlalchemy.String),
+    sqlalchemy.Column("email"  , sqlalchemy.String),
+    sqlalchemy.Column("phone"  , sqlalchemy.String),
+    sqlalchemy.Column("address"  , sqlalchemy.String),
+
+    sqlalchemy.Column("status"    , sqlalchemy.String),
+    sqlalchemy.Column("created_at", sqlalchemy.String),
+    sqlalchemy.Column("last_update_at", sqlalchemy.String),
+)
+
+
+#16 Distributor order
+distr_order = sqlalchemy.Table(
+    "distr_order",
+    metadata,
+    sqlalchemy.Column("distr_order_id", sqlalchemy.String , primary_key=True),
+    sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
+    sqlalchemy.Column("distributor_id", sqlalchemy.String, ForeignKey(distributor.c.distributor_id), nullable=False),
+    sqlalchemy.Column("product_id", sqlalchemy.String , ForeignKey(product.c.product_id), nullable=False),
+    
+    sqlalchemy.Column("quantity"  , sqlalchemy.Integer),
+    sqlalchemy.Column("unit_price"  , sqlalchemy.Float),
+    sqlalchemy.Column("total"  , sqlalchemy.Float),
+
+    sqlalchemy.Column("status"    , sqlalchemy.String),
+    sqlalchemy.Column("created_at", sqlalchemy.String),
+    sqlalchemy.Column("last_update_at", sqlalchemy.String),
+)
+
+
+#17 Distributor payments
+distr_payment = sqlalchemy.Table(
+    "distr_payment",
+    metadata,
+    sqlalchemy.Column("distr_payment_id", sqlalchemy.String , primary_key=True),
+    sqlalchemy.Column("user_id", sqlalchemy.String, ForeignKey(users.c.user_id), nullable=False),
+    sqlalchemy.Column("distributor_id", sqlalchemy.String, ForeignKey(distributor.c.distributor_id), nullable=False),
+    sqlalchemy.Column("product_id", sqlalchemy.String , ForeignKey(product.c.product_id), nullable=False),
+    
+    sqlalchemy.Column("payed_status"  , sqlalchemy.String),
+    sqlalchemy.Column("payed_amount"  , sqlalchemy.Float),
+    
+    sqlalchemy.Column("status"    , sqlalchemy.String),
+    sqlalchemy.Column("created_at", sqlalchemy.String),
+    sqlalchemy.Column("last_update_at", sqlalchemy.String),
+)
 
 
 

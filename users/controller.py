@@ -20,7 +20,7 @@ async def read_user_me(currentUser: model.UserList = Depends(util.get_current_ac
 async def find_all_user(
     currentUser: model.UserList = Depends(util.get_current_active_user)
 ):
-    query = "select * from users"
+    query = "select * from users order by created_at desc"
     res= await database.fetch_all(query=query, values={})
     return paginate(res)
 
@@ -67,7 +67,7 @@ async def update_user(user: model.UserUpdate, currentUser: model.UserList = Depe
 #Delete User
 @router.delete("/users/{User_id}", response_model=model.UserList)
 async def Delete_by_id(User_id: str, currentUser: model.UserList = Depends(util.get_current_active_user)):
-    query = users.delete().where(users.c.id == User_id)
+    query = users.delete().where(users.c.user_id == User_id)
     return await database.execute(query)
 
 

@@ -86,6 +86,9 @@ from category import controller as categoryController
 from products import controller as productsController
 from item import controller as itemsController
 from orders import controller as ordersController
+from distributor import controller as distributorController
+from distributor_order import controller as distributorOrderController
+from distributor_payment import controller as distributorPaymentController
 
 
 
@@ -114,5 +117,8 @@ app.include_router(itemsController.router, tags=["Items"])
 app.include_router(ordersController.router, tags=["Orders"])
 
 
+app.include_router(distributorController.router, tags=["Distributor"])
+app.include_router(distributorOrderController.router, tags=["Distributor Order"])
+app.include_router(distributorPaymentController.router, tags=["Distributor Payment"])
 
 add_pagination(app)

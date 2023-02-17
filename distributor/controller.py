@@ -15,7 +15,7 @@ router = APIRouter()
 # All distributors
 @router.get("/all_distributors", response_model=Page[model.distributorList])
 async def find_all_distributors(currentUser: model.distributorList = Depends(util.get_current_active_user)):
-    query = distributor.select().order_by(distributor.c.distributor_id.desc())
+    query = distributor.select().order_by(distributor.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 

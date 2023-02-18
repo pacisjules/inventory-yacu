@@ -105,7 +105,7 @@ async def update_distributor(dsrt: model.distributorUpdate, currentUser: model.d
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = distributor.update().where(distributor.c.distributor_id == distributor.distributor_id).values(
+    Query = distributor.update().where(distributor.c.distributor_id == dsrt.distributor_id).values(
 
         distributor_id=gid,
 

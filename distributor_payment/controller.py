@@ -99,7 +99,7 @@ async def update_item(order: model.distributorPaymentUpdate, currentUser: model.
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = distr_payment.update().where(distr_payment.c.distr_payment_id == distr_payment.distr_payment_id).values(
+    Query = distr_payment.update().where(distr_payment.c.distr_payment_id == order.distr_payment_id).values(
 
         distr_payment_id=gid,
 

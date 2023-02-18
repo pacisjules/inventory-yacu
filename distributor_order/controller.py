@@ -102,7 +102,7 @@ async def update_item(order: model.distributorOrderUpdate, currentUser: model.di
     gid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
 
-    Query = distr_order.update().where(distr_order.c.distr_order_id == distr_order.distr_order_id).values(
+    Query = distr_order.update().where(distr_order.c.distr_order_id == order.distr_order_id).values(
 
         distr_order_id=gid,
 

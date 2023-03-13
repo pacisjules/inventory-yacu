@@ -54,7 +54,6 @@ async def find_section_by_status(status: str, currentUser: model.SectionList = D
     return paginate(res)
 
 
-
 # add new currency
 @router.post("/addsection")
 async def register_section(sections: model.SectionCreate):
@@ -98,7 +97,7 @@ async def update_section(cstm: model.SectionUpdate, currentUser: model.SectionLi
             section_name=cstm.section_name, 
             description=cstm.description,
             
-            status = "1",
+            status = cstm.status,
             created_at = gdate,
             last_update_at=gdate
             

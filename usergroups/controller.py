@@ -98,7 +98,7 @@ async def update_group(cstm: model.GroupUpdate, currentUser: model.GroupList = D
             group_name=cstm.group_name, 
             description=cstm.description,
             
-            status = "1",
+            status = cstm.status,
             created_at = gdate,
             last_update_at=gdate
             

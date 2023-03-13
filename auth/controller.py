@@ -74,7 +74,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         "access_token": access_token, 
         "token_type": "bearer",
         "action":"1",
-        "expired_in": constant.ACCESS_TOKEN_EXPIRE_MINUTES*60,
+        "expired_in": constant.ACCESS_TOKEN_EXPIRE_MINUTES*130,
         "user_info": user,
     }
 

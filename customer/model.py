@@ -8,7 +8,7 @@ class CustomerCreate(BaseModel):
     bio: str = Field(..., example="bio")
     email: str = Field(..., example="email")
     phone: str = Field(..., example="phone")
-
+    identity_number: str = Field(..., example="phone")
     province: str = Field(..., example="province")
     district: str = Field(..., example="district")
     address: str = Field(..., example="address")
@@ -47,7 +47,7 @@ class CustomerUpdate(BaseModel):
     bio: str
     email: str
     phone: str 
-    
+    identity_number: str
     province: str
     district: str
     address: str

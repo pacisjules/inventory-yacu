@@ -15,7 +15,7 @@ router = APIRouter()
 # All stores
 @router.get("/all_stores", response_model=Page[model.storeList])
 async def find_all_stores(currentUser: model.storeList = Depends(util.get_current_active_user)):
-    query = stores.select().order_by(stores.c.store_id.desc())
+    query = stores.select().order_by(stores.c.created_at.desc())
     res = await database.fetch_all(query)
     return paginate(res)
 

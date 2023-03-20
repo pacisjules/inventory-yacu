@@ -39,7 +39,13 @@ async def count_all_count(currentUser: model.productList = Depends(util.get_curr
     query = "SELECT COUNT(product_id) as NumberOfproducts FROM product"
     res= await database.fetch_all(query=query, values={})
     return res
- 
+
+#counting all product
+@router.get("/get_products")
+async def count_all_count(currentUser: model.productList = Depends(util.get_current_active_user)):
+    query = "SELECT product_id, product_name  FROM product"
+    res= await database.fetch_all(query=query, values={})
+    return res 
  
 #Find one product by ID
 @router.get("/product/{product_id}", response_model=model.productList)

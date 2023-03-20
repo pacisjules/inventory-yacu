@@ -44,6 +44,10 @@ async def find_item_by_id(item_id: str, currentUser: model.itemList = Depends(ut
     query = item.select().where(item.c.item_id == item_id)
     return await database.fetch_one(query)
 
+
+
+
+
 #Find one item by item price
 @router.get("/item/{price}", response_model=model.itemList)
 async def find_item_by_item_price(price: str, currentUser: model.itemList = Depends(util.get_current_active_user)):
@@ -65,7 +69,14 @@ async def find_item_by_status(status: str, currentUser: model.itemList = Depends
     res = await database.fetch_all(query)
     return paginate(res)
 
+#add item of product
 
+#counting all item
+@router.get("/get_items")
+async def count_all_count(currentUser: model.itemList = Depends(util.get_current_active_user)):
+    query1 = "SELECT product_id , quantity  FROM item"
+    res= await database.fetch_all(query=query1, values={})
+    return res
 
 # add new item
 @router.post("/additem")
@@ -73,7 +84,9 @@ async def register_store(itm: model.itemCreate):
 
     usid = str(uuid.uuid1())
     gdate = str(datetime.datetime.now())
-    
+
+       
+
     #Adding item
     query = item.insert().values(
 

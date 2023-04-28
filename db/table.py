@@ -151,7 +151,6 @@ category = sqlalchemy.Table(
 )
 
 
-
 #8 Table product
 product = sqlalchemy.Table(
     "product",
@@ -166,6 +165,7 @@ product = sqlalchemy.Table(
 
     sqlalchemy.Column("description"     , sqlalchemy.String),
     sqlalchemy.Column("unity_type"  , sqlalchemy.String),
+    sqlalchemy.Column("barcode"  , sqlalchemy.Integer),
 
     sqlalchemy.Column("status"    , sqlalchemy.String),
     sqlalchemy.Column("created_at", sqlalchemy.String),
@@ -317,8 +317,6 @@ distr_payment = sqlalchemy.Table(
     sqlalchemy.Column("created_at", sqlalchemy.String),
     sqlalchemy.Column("last_update_at", sqlalchemy.String),
 )
-
-
 
 
 
